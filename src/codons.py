@@ -19,6 +19,11 @@ CODON_MAP = {'TTT': 'F', 'TTC': 'F', 'TTA': 'L', 'TTG': 'L',
 
 
 def split_codons(dna: str) -> list[str] | None:
+    if len(split_codons) % 3 != 0:
+        return None
+    if len(split_codons) % 3 == 0:
+        return [dna [i:i+3] for i in range (0, len(dna), 3)]
+
     """Split a DNA string into a list of triplets.
 
     If the length of the string is a multiple of tree, then this
@@ -40,6 +45,13 @@ def split_codons(dna: str) -> list[str] | None:
 
 
 def translate_codons(codons: list[str]) -> list[str]:
+    amino = []
+    for i in codons:
+        if i.upper() not in CODON_MAP:
+            return None
+        else i.upper() in CODON_MAP:
+            i.append(amino)
+
     """Translate a list of codons (triplets) into their corresponding
     amino acid sequence.
 
@@ -65,6 +77,10 @@ def translate_codons(codons: list[str]) -> list[str]:
 
 
 def translate_dna(dna: str) -> str:
+    if translate_codons(split_codons(dna)) != None:
+        amino = "".join(translate_codons(codons))
+    else amino = None
+        
     """Translate a DNA string into its corresponding amino acid string.
 
     >>> translate_dna('TGTTGCTGA')
