@@ -19,66 +19,30 @@ CODON_MAP = {'TTT': 'F', 'TTC': 'F', 'TTA': 'L', 'TTG': 'L',
 
 
 def split_codons(dna: str) -> list[str] | None:
-    """Split a DNA string into a list of triplets.
+    if len(dna) % 3 != 0:
+        return None
+    if len(dna) % 3 == 0:
+        return [dna[i:i+3] for i in range (0, len(dna), 3)]
 
-    If the length of the string is a multiple of tree, then this
-    function splits the string into non-overlapping triplets.
-
-    >>> split_codons('aaacccgggttt')
-    ['aaa', 'ccc', 'ggg', 'ttt']
-
-    If the string length is not a multiple of three, the function
-    should return `None`. (There are better ways at reporting
-    errors, but we will see those later).
-
-    >>> split_codons("acgt") is None
-    True
-
-    """
-    # FIXME: Implement the function
-    return []
 
 
 def translate_codons(codons: list[str]) -> list[str]:
-    """Translate a list of codons (triplets) into their corresponding
-    amino acid sequence.
-
-    >>> translate_codons(['TGT', 'TGC', 'TGA'])
-    ['C', 'C', '*']
-
-    The function must be able to handle both upper and lower case
-    strings.
-
-    >>> translate_codons(['tgt', 'tgc', 'tga'])
-    ['C', 'C', '*']
-
-    If the `codons` list contain anything that isn't a valid codon,
-    i.e. not in the CODON_MAP when translated into upper case, the
-    function should return `None`.
-
-    >>> translate_codons(["acg", "ac", "gca"]) is None
-    True
-
-    """
-    # FIXME: Implement the function
-    return []
+    amino = []
+    if codons is None:
+        return None
+    for codon in codons:
+        codon = codon.upper() 
+        if codon in CODON_MAP:
+            amino.append(CODON_MAP[codon])
+        else:
+            return None
+    return amino
 
 
 def translate_dna(dna: str) -> str:
-    """Translate a DNA string into its corresponding amino acid string.
 
-    >>> translate_dna('TGTTGCTGA')
-    'CC*'
-    >>> translate_dna('tgttgctga')
-    'CC*'
+    if translate_codons(split_codons(dna)) != None:
+        return "".join(translate_codons(split_codons(dna)))
+    else:
+        return None
 
-    If the sequence does not have a length that is a multiple of three, of if
-    any of the triplets in it are not valid codons (when in uppercase), the function
-    should return `None`.
-
-    >>> translate_dna('tgtgctg') is None
-    True
-
-    """
-    # FIXME: Implement the function
-    return ""
