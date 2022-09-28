@@ -46,5 +46,3 @@ def translate_dna(dna: str) -> str:
     else:
         return None
 
-print(translate_dna('tgttgctga'))
-
